@@ -31,7 +31,9 @@ class SearchViewModel(
     }
 
     fun searchTracks(query: String) {
-        if (!isValidRequest(query)) {
+        val request = parseRequest(query)
+
+        if (!isValidRequest(request)) {
             updateUiState {
                 it.copy(
                     uiState = UiState.LOAD_ERROR,
@@ -43,7 +45,7 @@ class SearchViewModel(
 
         updateUiState { it.copy(uiState = UiState.LOADING) }
 
-        val dispose = tracksRepository.searchTracks(query)
+        val dispose = tracksRepository.searchTracks(request)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -55,11 +57,20 @@ class SearchViewModel(
     }
 
     private fun handleSuccessResult(result: List<Track>) {
-        updateUiState {
-            it.copy(
-                uiState = UiState.READY_TO_SHOW,
-                searchResult = result
-            )
+        if (result.isEmpty()) {
+            updateUiState {
+                it.copy(
+                    uiState = UiState.LOAD_ERROR,
+                    searchErrorType = SearchErrorType.NO_RESULTS
+                )
+            }
+        } else {
+            updateUiState {
+                it.copy(
+                    uiState = UiState.READY_TO_SHOW,
+                    searchResult = result
+                )
+            }
         }
     }
 
@@ -78,6 +89,10 @@ class SearchViewModel(
                 )
             }
         }
+    }
+
+    private fun parseRequest(request: String): String {
+        return request.trim()
     }
 
     private fun isValidRequest(request: String): Boolean {
@@ -116,6 +131,7 @@ enum class UiState {
 }
 
 enum class SearchErrorType {
+    NO_RESULTS,
     INVALID_REQUEST,
     NETWORK_ERROR,
     UNDEFINED

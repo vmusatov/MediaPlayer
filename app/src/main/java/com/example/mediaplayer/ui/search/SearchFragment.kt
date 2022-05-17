@@ -100,6 +100,7 @@ class SearchFragment : Fragment() {
         errorText.text = when (searchErrorType) {
             SearchErrorType.INVALID_REQUEST -> getString(R.string.request_min_length_notice)
             SearchErrorType.NETWORK_ERROR -> getString(R.string.network_error)
+            SearchErrorType.NO_RESULTS -> getString(R.string.nothing_found)
             else -> getString(R.string.undefined_error)
         }
         errorText.visibility = View.VISIBLE
