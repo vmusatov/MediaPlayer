@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/track_search_text"
+        style="@style/searchInput"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="@string/enter_media_name"
+        android:imeOptions="actionSearch"
+        android:lines="1"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/app_margin"
+        android:textSize="@dimen/small_text"
+        android:textColor="@color/gray"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/track_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/app_margin"
+        android:visibility="visible"
+        android:windowSoftInputMode="adjustResize"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_track_list"
+        tools:visibility="visible" />
+
+</LinearLayout>
