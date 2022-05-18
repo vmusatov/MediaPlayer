@@ -7,12 +7,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mediaplayer.R
 import com.example.mediaplayer.appComponent
 import com.example.mediaplayer.databinding.FragmentSearchBinding
+import com.example.mediaplayer.ui.player.PlayerFragment
 import com.example.mediaplayer.ui.search.adapter.TrackListAdapter
 import javax.inject.Inject
 
@@ -50,7 +53,10 @@ class SearchFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         trackListAdapter = TrackListAdapter {
-
+            findNavController().navigate(
+                R.id.action_searchFragment_to_playerFragment,
+                bundleOf(PlayerFragment.TRACK_KEY to it)
+            )
         }
     }
 
@@ -89,7 +95,8 @@ class SearchFragment : Fragment() {
 
                 UiState.LOAD_ERROR -> handleError(it.searchErrorType ?: SearchErrorType.UNDEFINED)
 
-                else -> { }
+                else -> {
+                }
             }
         }
     }
