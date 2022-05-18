@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.mediaplayer.data.TracksRepository
+import com.example.mediaplayer.data.repository.TracksRepository
 import com.example.mediaplayer.model.Track
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -23,13 +23,6 @@ class SearchViewModel(
 
     private val disposeBag: CompositeDisposable = CompositeDisposable()
 
-    private fun updateUiState(updater: (SearchScreenUiState) -> SearchScreenUiState) {
-        _uiState.postValue(
-            _uiState.value?.let { updater(it) }
-                ?: updater(SearchScreenUiState())
-        )
-    }
-
     fun searchTracks(query: String) {
         val request = parseRequest(query)
 
@@ -42,8 +35,6 @@ class SearchViewModel(
             }
             return
         }
-
-        updateUiState { it.copy(uiState = UiState.LOADING) }
 
         val dispose = tracksRepository.searchTracks(request)
             .subscribeOn(Schedulers.io())
@@ -99,6 +90,13 @@ class SearchViewModel(
         return request.length > MIN_REQEUST_LENGTH
     }
 
+    private fun updateUiState(updater: (SearchScreenUiState) -> SearchScreenUiState) {
+        _uiState.postValue(
+            _uiState.value?.let { updater(it) }
+                ?: updater(SearchScreenUiState())
+        )
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposeBag.clear()
@@ -125,7 +123,6 @@ data class SearchScreenUiState(
 
 enum class UiState {
     NOTHING,
-    LOADING,
     READY_TO_SHOW,
     LOAD_ERROR
 }

@@ -1,6 +1,6 @@
 package com.example.mediaplayer.data.di
 
-import com.example.mediaplayer.data.TracksRepository
+import com.example.mediaplayer.data.repository.TracksRepository
 import com.example.mediaplayer.data.remote.MediaApi
 import com.example.mediaplayer.data.repository.TracksRepositoryImpl
 import dagger.Module

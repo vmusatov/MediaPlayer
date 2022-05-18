@@ -86,17 +86,13 @@ class SearchFragment : Fragment() {
     private fun setupObservers() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it.uiState) {
-
                 UiState.READY_TO_SHOW -> {
                     trackListAdapter?.update(it.searchResult)
                     binding.errorText.visibility = View.GONE
                     binding.trackList.visibility = View.VISIBLE
                 }
-
                 UiState.LOAD_ERROR -> handleError(it.searchErrorType ?: SearchErrorType.UNDEFINED)
-
-                else -> {
-                }
+                else -> { }
             }
         }
     }

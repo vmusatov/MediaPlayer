@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MediaPlayer</string>
 
-    <string name="enter_media_name">Song, album or artist</string>
+    <string name="enter_track_name">Track name</string>
 
     <string name="request_min_length_notice">Request should contains min 5 symbols</string>
     <string name="network_error">Failed to get new data\nCheck your internet connection</string>

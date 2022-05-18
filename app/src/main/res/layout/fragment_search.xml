@@ -11,7 +11,7 @@
         style="@style/searchInput"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:hint="@string/enter_media_name"
+        android:hint="@string/enter_track_name"
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:lines="1"
